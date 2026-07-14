@@ -4,550 +4,385 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minecraft Tools Hub | r4dzioo_</title>
-  <meta name="description" content="Centrum darmowych narzędzi Minecraft. Generuj komendy, twórz przedmioty i korzystaj z przydatnych narzędzi w jednym miejscu." />
-  <!-- Favicon as inline SVG data URI -->
+  <meta name="description" content="Zaawansowane, darmowe generatory komend Minecraft. Twórz komendy /give, /summon, /tellraw i wiele więcej w kilka sekund." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛏</text></svg>" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ===== BACK TO TOP BUTTON ===== -->
+  <div id="cursor-glow"></div>
+
   <button id="back-to-top" aria-label="Wróć na górę">▲</button>
 
-  <!-- ===== HEADER ===== -->
   <header id="site-header">
     <div class="header-inner container">
-      <!-- Logo -->
-      <a href="#" class="logo" aria-label="Minecraft Tools Hub – strona główna">
+      <a href="#" class="logo" aria-label="Minecraft Tools Hub">
         <span class="logo-icon">⛏</span>
         <span class="logo-text">Minecraft <strong>Tools Hub</strong></span>
       </a>
 
-      <!-- Mobile hamburger -->
-      <button class="hamburger" id="hamburger" aria-label="Otwórz menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-
-      <!-- Navigation -->
-      <nav id="main-nav" aria-label="Nawigacja główna">
-        <ul>
-          <li><a href="#hero">Strona główna</a></li>
-          <li><a href="#tools">Generatory</a></li>
-          <li><a href="#tools">Narzędzia</a></li>
-          <li><a href="#guides">Poradniki</a></li>
-          <li><a href="#about">O projekcie</a></li>
-        </ul>
-      </nav>
-
-      <!-- Header CTA -->
-      <button class="btn btn-accent" id="header-random-btn">🎲 Losowe narzędzie</button>
+      <div class="global-version-wrap">
+        <label for="global-version">Wersja MC:</label>
+        <select id="global-version" class="field-select field-sm">
+          <option value="1.8.9">1.8.9</option>
+          <option value="1.12.2">1.12.2</option>
+          <option value="1.16.5">1.16.5</option>
+          <option value="1.18.2">1.18.2</option>
+          <option value="1.19.4">1.19.4</option>
+          <option value="1.20">1.20</option>
+          <option value="1.20.1">1.20.1</option>
+          <option value="1.20.2">1.20.2</option>
+          <option value="1.20.4">1.20.4</option>
+          <option value="1.20.5">1.20.5</option>
+          <option value="1.20.6">1.20.6</option>
+          <option value="1.21">1.21</option>
+          <option value="1.21.1">1.21.1</option>
+          <option value="1.21.3">1.21.3</option>
+          <option value="1.21.4" selected>1.21.4</option>
+          <option value="1.21.5">1.21.5</option>
+          <option value="1.21.6">1.21.6</option>
+          <option value="1.21.7">1.21.7</option>
+          <option value="1.21.8">1.21.8</option>
+        </select>
+      </div>
     </div>
   </header>
 
-  <!-- ===== HERO SECTION ===== -->
   <section id="hero" class="hero">
     <div class="hero-bg-grid" aria-hidden="true"></div>
     <div class="container hero-content animate-entry">
-      <span class="hero-eyebrow">⛏ Darmowe · Szybkie · Dla każdego gracza</span>
-      <h1 class="hero-title">Twoje centrum<br /><span class="accent-text">Minecraft Tools</span></h1>
-      <p class="hero-desc">Generuj komendy, twórz przedmioty i korzystaj z&nbsp;przydatnych narzędzi Minecraft w&nbsp;jednym miejscu.</p>
+      <span class="hero-eyebrow">Wszystkie komendy w jednym miejscu</span>
+      <h1 class="hero-title">Generator Komend<br /><span class="accent-text">Minecraft</span></h1>
+      <p class="hero-desc">Wybierz narzędzie, dostosuj opcje i skopiuj gotową komendę. Obsługa nowych Item Components (1.20.5+) oraz klasycznych NBT.</p>
 
-      <!-- Search bar -->
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input
-          type="search"
-          id="tool-search"
-          placeholder="Wyszukaj narzędzie…"
-          autocomplete="off"
-          aria-label="Wyszukaj narzędzie"
-        />
-        <div id="search-results" class="search-dropdown" role="listbox" aria-label="Wyniki wyszukiwania"></div>
-      </div>
-
-      <div class="hero-btns">
-        <a href="#tools" class="btn btn-primary">🛠️ Zobacz narzędzia</a>
-        <button class="btn btn-outline" id="hero-random-btn">🎲 Losuj narzędzie</button>
-      </div>
-
-      <!-- Recently used -->
-      <div id="recent-wrap" class="recent-wrap" hidden>
-        <p class="recent-label">⏱ Ostatnio używane:</p>
-        <div id="recent-list" class="recent-list"></div>
+        <input type="search" id="tool-search" placeholder="Szukaj generatora (np. give, summon)..." autocomplete="off" />
+        <div id="search-results" class="search-dropdown"></div>
       </div>
     </div>
   </section>
 
-  <!-- ===== POPULAR SECTION ===== -->
-  <section id="popular" class="popular section-pad">
-    <div class="container">
-      <h2 class="section-title">🔥 Najpopularniejsze</h2>
-      <ol class="popular-list">
-        <li><a href="#give-gen">Generator /give</a></li>
-        <li><a href="#enchant-gen">Generator enchantów</a></li>
-        <li><a href="#nick-gen">Generator nicków</a></li>
-        <li><a href="#tellraw-gen">Generator /tellraw</a></li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- ===== TOOLS SECTION ===== -->
   <section id="tools" class="tools-section section-pad">
     <div class="container">
-      <h2 class="section-title">🛠️ Narzędzia &amp; Generatory</h2>
-      <p class="section-sub">Wszystkie narzędzia działają w przeglądarce – zero rejestracji, zero reklam.</p>
+      
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Wszystkie</button>
+        <button class="filter-btn" data-filter="items">Przedmioty</button>
+        <button class="filter-btn" data-filter="mobs">Moby</button>
+        <button class="filter-btn" data-filter="players">Gracze</button>
+        <button class="filter-btn" data-filter="world">Świat</button>
+      </div>
 
       <div class="tools-grid">
 
-        <!-- ===== A) GIVE GENERATOR ===== -->
-        <div class="tool-card animate-entry" id="give-gen" data-tool-name="Generator /give" data-tool-id="give-gen">
+        <div class="tool-card animate-entry" id="give-gen" data-category="items">
           <div class="tool-card-header">
             <span class="tool-icon">🗡️</span>
-            <div>
-              <h3>Generator komendy /give</h3>
-              <p class="tool-tagline">Wygeneruj komendę dającą przedmiot z enchantami</p>
-            </div>
-            <button class="btn-fullscreen" aria-label="Pełny ekran" title="Pełny ekran">⛶</button>
+            <div><h3>Generator /give</h3><p class="tool-tagline">Generuj przedmioty z enchantami i NBT</p></div>
           </div>
-
-          <div class="tool-body">
-            <!-- Version -->
-            <label class="field-label" for="give-version">Wersja Minecraft</label>
-            <select id="give-version" class="field-select">
-              <option value="1.20">1.20</option>
-              <option value="1.21">1.21</option>
-              <option value="1.21.4" selected>1.21.4</option>
-            </select>
-
-            <!-- Item -->
-            <label class="field-label" for="give-item">Przedmiot</label>
-            <select id="give-item" class="field-select">
-              <option value="diamond_sword">Diamentowy miecz</option>
-              <option value="netherite_sword">Netherite miecz</option>
-              <option value="diamond_pickaxe">Diamentowy kilof</option>
-              <option value="netherite_pickaxe">Netherite kilof</option>
-              <option value="bow">Łuk</option>
-              <option value="crossbow">Kusza</option>
-              <option value="diamond_helmet">Diamentowy hełm</option>
-              <option value="diamond_chestplate">Diamentowy napierśnik</option>
-              <option value="diamond_leggings">Diamentowe nagolenniki</option>
-              <option value="diamond_boots">Diamentowe buty</option>
-              <option value="netherite_helmet">Netherite hełm</option>
-              <option value="netherite_chestplate">Netherite napierśnik</option>
-              <option value="shield">Tarcza</option>
-              <option value="trident">Trójząb</option>
-            </select>
-
-            <!-- Amount -->
-            <label class="field-label" for="give-amount">Ilość</label>
-            <input type="number" id="give-amount" class="field-input" value="1" min="1" max="64" />
-
-            <!-- Player -->
-            <label class="field-label" for="give-player">Gracz (np. @p, @a, Steve)</label>
-            <input type="text" id="give-player" class="field-input" value="@p" />
-
-            <!-- Enchantments -->
-            <fieldset class="enchant-group">
-              <legend class="field-label">Enchanty</legend>
-              <div class="enchant-grid">
-                <div class="enchant-row">
-                  <label><input type="checkbox" class="enchant-check" value="sharpness" /> Sharpness</label>
-                  <select class="enchant-level" aria-label="Poziom Sharpness">
-                    <option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option>
-                  </select>
-                </div>
-                <div class="enchant-row">
-                  <label><input type="checkbox" class="enchant-check" value="efficiency" /> Efficiency</label>
-                  <select class="enchant-level" aria-label="Poziom Efficiency">
-                    <option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option>
-                  </select>
-                </div>
-                <div class="enchant-row">
-                  <label><input type="checkbox" class="enchant-check" value="protection" /> Protection</label>
-                  <select class="enchant-level" aria-label="Poziom Protection">
-                    <option>1</option><option>2</option><option>3</option><option selected>4</option>
-                  </select>
-                </div>
-                <div class="enchant-row">
-                  <label><input type="checkbox" class="enchant-check" value="unbreaking" /> Unbreaking</label>
-                  <select class="enchant-level" aria-label="Poziom Unbreaking">
-                    <option>1</option><option>2</option><option selected>3</option>
-                  </select>
-                </div>
-                <div class="enchant-row">
-                  <label><input type="checkbox" class="enchant-check" value="fortune" /> Fortune</label>
-                  <select class="enchant-level" aria-label="Poziom Fortune">
-                    <option>1</option><option>2</option><option selected>3</option>
-                  </select>
-                </div>
-                <div class="enchant-row">
-                  <label><input type="checkbox" class="enchant-check" value="mending" /> Mending</label>
-                  <select class="enchant-level" aria-label="Poziom Mending"><option selected>1</option></select>
-                </div>
-                <div class="enchant-row">
-                  <label><input type="checkbox" class="enchant-check" value="looting" /> Looting</label>
-                  <select class="enchant-level" aria-label="Poziom Looting">
-                    <option>1</option><option>2</option><option selected>3</option>
-                  </select>
-                </div>
-                <div class="enchant-row">
-                  <label><input type="checkbox" class="enchant-check" value="fire_aspect" /> Fire Aspect</label>
-                  <select class="enchant-level" aria-label="Poziom Fire Aspect">
-                    <option>1</option><option selected>2</option>
-                  </select>
-                </div>
+          <div class="tool-body form-grid">
+            <div class="input-group">
+              <label class="field-label">Przedmiot</label>
+              <input type="text" id="give-item" class="field-input" value="diamond_sword" placeholder="np. diamond_sword" />
+            </div>
+            <div class="input-group">
+              <label class="field-label">Ilość</label>
+              <input type="number" id="give-amount" class="field-input" value="1" min="1" max="64" />
+            </div>
+            <div class="input-group">
+              <label class="field-label">Gracz (@p, @a)</label>
+              <input type="text" id="give-player" class="field-input" value="@p" />
+            </div>
+            <div class="input-group">
+              <label class="field-label">Custom Nazwa</label>
+              <input type="text" id="give-name" class="field-input" placeholder="Zostaw puste dla domyślnej" />
+            </div>
+            <div class="input-group full-width">
+              <label class="field-label">Lore (opis przedmiotu)</label>
+              <input type="text" id="give-lore" class="field-input" placeholder="np. Epicki miecz z zaświatów" />
+            </div>
+            <div class="input-group checkbox-row full-width">
+              <label><input type="checkbox" id="give-unbreakable" /> Niezniszczalny</label>
+              <label><input type="checkbox" id="give-hideflags" /> Ukryj flagi (Enchanty)</label>
+            </div>
+            <div class="input-group full-width">
+              <label class="field-label">Szybkie Enchanty</label>
+              <div class="enchant-quick-grid">
+                <label><input type="checkbox" class="give-ench" value="sharpness" data-lvl="5"> Sharpness V</label>
+                <label><input type="checkbox" class="give-ench" value="efficiency" data-lvl="5"> Efficiency V</label>
+                <label><input type="checkbox" class="give-ench" value="protection" data-lvl="4"> Protection IV</label>
+                <label><input type="checkbox" class="give-ench" value="fortune" data-lvl="3"> Fortune III</label>
+                <label><input type="checkbox" class="give-ench" value="unbreaking" data-lvl="3"> Unbreaking III</label>
+                <label><input type="checkbox" class="give-ench" value="mending" data-lvl="1"> Mending</label>
               </div>
-            </fieldset>
-
-            <button class="btn btn-primary w-full" id="give-generate-btn">⚡ Generuj komendę</button>
-
-            <div class="output-wrap" id="give-output-wrap" hidden>
-              <label class="field-label">Gotowa komenda:</label>
-              <div class="output-box">
-                <code id="give-output"></code>
-                <button class="copy-btn" data-target="give-output" aria-label="Kopiuj">📋 Kopiuj</button>
-              </div>
+            </div>
+            <button class="btn btn-primary full-width" id="give-generate-btn">⚡ Generuj /give</button>
+            <div class="output-wrap full-width" hidden>
+              <div class="output-box"><code></code><button class="copy-btn">📋 Kopiuj</button></div>
             </div>
           </div>
         </div>
 
-        <!-- ===== B) TELLRAW GENERATOR ===== -->
-        <div class="tool-card animate-entry" id="tellraw-gen" data-tool-name="Generator /tellraw" data-tool-id="tellraw-gen">
+        <div class="tool-card animate-entry" id="summon-gen" data-category="mobs">
+          <div class="tool-card-header">
+            <span class="tool-icon">🧟</span>
+            <div><h3>Generator /summon</h3><p class="tool-tagline">Przywołuj zmodyfikowane moby</p></div>
+          </div>
+          <div class="tool-body form-grid">
+            <div class="input-group">
+              <label class="field-label">Mob</label>
+              <select id="summon-mob" class="field-select">
+                <option value="zombie">Zombie</option>
+                <option value="skeleton">Skeleton</option>
+                <option value="creeper">Creeper</option>
+                <option value="villager">Villager</option>
+                <option value="warden">Warden</option>
+                <option value="wither">Wither</option>
+                <option value="ender_dragon">Ender Dragon</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label class="field-label">Nazwa nad mobem</label>
+              <input type="text" id="summon-name" class="field-input" placeholder="Zostaw puste" />
+            </div>
+            <div class="input-group">
+              <label class="field-label">Max HP</label>
+              <input type="number" id="summon-hp" class="field-input" placeholder="Domyślne" />
+            </div>
+            <div class="input-group checkbox-row full-width">
+              <label><input type="checkbox" id="summon-noai" /> NoAI (Nie rusza się)</label>
+              <label><input type="checkbox" id="summon-invul" /> Invulnerable (Nieśmiertelny)</label>
+              <label><input type="checkbox" id="summon-silent" /> Silent (Cichy)</label>
+              <label><input type="checkbox" id="summon-glowing" /> Glowing (Świecący)</label>
+            </div>
+            <button class="btn btn-primary full-width" id="summon-generate-btn">⚡ Generuj /summon</button>
+            <div class="output-wrap full-width" hidden>
+              <div class="output-box"><code></code><button class="copy-btn">📋 Kopiuj</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-card animate-entry" id="effect-gen" data-category="players">
+          <div class="tool-card-header">
+            <span class="tool-icon">🧪</span>
+            <div><h3>Generator /effect</h3><p class="tool-tagline">Nakładaj efekty na graczy i moby</p></div>
+          </div>
+          <div class="tool-body form-grid">
+            <div class="input-group">
+              <label class="field-label">Gracz / Cel</label>
+              <input type="text" id="effect-target" class="field-input" value="@p" />
+            </div>
+            <div class="input-group">
+              <label class="field-label">Efekt</label>
+              <select id="effect-type" class="field-select">
+                <option value="speed">Speed</option>
+                <option value="strength">Strength</option>
+                <option value="regeneration">Regeneration</option>
+                <option value="resistance">Resistance</option>
+                <option value="night_vision">Night Vision</option>
+                <option value="fire_resistance">Fire Resistance</option>
+                <option value="haste">Haste</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label class="field-label">Czas (sekundy)</label>
+              <input type="number" id="effect-duration" class="field-input" value="60" />
+            </div>
+            <div class="input-group">
+              <label class="field-label">Moc (0 = poziom 1)</label>
+              <input type="number" id="effect-amp" class="field-input" value="0" />
+            </div>
+            <div class="input-group checkbox-row full-width">
+              <label><input type="checkbox" id="effect-hide" /> Ukryj cząsteczki (Particles)</label>
+            </div>
+            <button class="btn btn-primary full-width" id="effect-generate-btn">⚡ Generuj /effect</button>
+            <div class="output-wrap full-width" hidden>
+              <div class="output-box"><code></code><button class="copy-btn">📋 Kopiuj</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-card animate-entry" id="gamerule-gen" data-category="world">
+          <div class="tool-card-header">
+            <span class="tool-icon">⚙️</span>
+            <div><h3>Generator /gamerule</h3><p class="tool-tagline">Zarządzaj zasadami świata</p></div>
+          </div>
+          <div class="tool-body form-grid">
+            <div class="input-group full-width">
+              <label class="field-label">Zasada (Gamerule)</label>
+              <select id="gamerule-rule" class="field-select">
+                <option value="keepInventory">keepInventory (Zatrzymanie EQ po śmierci)</option>
+                <option value="doDaylightCycle">doDaylightCycle (Cykl dnia i nocy)</option>
+                <option value="doMobSpawning">doMobSpawning (Pojawianie się mobów)</option>
+                <option value="mobGriefing">mobGriefing (Niszczenie bloków przez moby)</option>
+                <option value="doWeatherCycle">doWeatherCycle (Cykl pogody)</option>
+                <option value="randomTickSpeed">randomTickSpeed (Szybkość rośnięcia)</option>
+                <option value="announceAdvancements">announceAdvancements (Osiągnięcia na czacie)</option>
+              </select>
+            </div>
+            <div class="input-group full-width">
+              <label class="field-label">Wartość</label>
+              <input type="text" id="gamerule-value" class="field-input" value="true" placeholder="true / false / liczba" />
+            </div>
+            <button class="btn btn-primary full-width" id="gamerule-generate-btn">⚡ Generuj /gamerule</button>
+            <div class="output-wrap full-width" hidden>
+              <div class="output-box"><code></code><button class="copy-btn">📋 Kopiuj</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-card animate-entry" id="title-gen" data-category="players">
+          <div class="tool-card-header">
+            <span class="tool-icon">🪧</span>
+            <div><h3>Generator /title</h3><p class="tool-tagline">Wyświetlaj napisy na ekranie</p></div>
+          </div>
+          <div class="tool-body form-grid">
+            <div class="input-group">
+              <label class="field-label">Cel</label>
+              <input type="text" id="title-target" class="field-input" value="@a" />
+            </div>
+            <div class="input-group">
+              <label class="field-label">Pozycja</label>
+              <select id="title-type" class="field-select">
+                <option value="title">Title (Środek ekranu)</option>
+                <option value="subtitle">Subtitle (Pod tytułem)</option>
+                <option value="actionbar">Actionbar (Nad paskiem EQ)</option>
+              </select>
+            </div>
+            <div class="input-group full-width">
+              <label class="field-label">Tekst</label>
+              <input type="text" id="title-text" class="field-input" value="Witaj na serwerze!" />
+            </div>
+            <div class="input-group">
+              <label class="field-label">Kolor</label>
+              <select id="title-color" class="field-select">
+                <option value="gold">Złoty</option><option value="red">Czerwony</option>
+                <option value="green">Zielony</option><option value="aqua">Aqua</option>
+                <option value="white" selected>Biały</option><option value="yellow">Żółty</option>
+              </select>
+            </div>
+            <div class="input-group checkbox-row">
+              <label><input type="checkbox" id="title-bold" /> Pogrubienie</label>
+              <label><input type="checkbox" id="title-italic" /> Kursywa</label>
+            </div>
+            <button class="btn btn-primary full-width" id="title-generate-btn">⚡ Generuj /title</button>
+            <div class="output-wrap full-width" hidden>
+              <div class="output-box"><code></code><button class="copy-btn">📋 Kopiuj</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-card animate-entry" id="tellraw-gen" data-category="players">
           <div class="tool-card-header">
             <span class="tool-icon">💬</span>
-            <div>
-              <h3>Generator /tellraw</h3>
-              <p class="tool-tagline">Stylizowane wiadomości w czacie Minecraft</p>
-            </div>
-            <button class="btn-fullscreen" aria-label="Pełny ekran" title="Pełny ekran">⛶</button>
+            <div><h3>Generator /tellraw</h3><p class="tool-tagline">Zaawansowane wiadomości na czacie</p></div>
           </div>
-
-          <div class="tool-body">
-            <label class="field-label" for="tellraw-msg">Treść wiadomości</label>
-            <input type="text" id="tellraw-msg" class="field-input" placeholder="Wpisz wiadomość…" value="Witaj na serwerze!" />
-
-            <label class="field-label" for="tellraw-color">Kolor tekstu</label>
-            <select id="tellraw-color" class="field-select">
-              <option value="white">Biały</option>
-              <option value="yellow">Żółty</option>
-              <option value="gold">Złoty</option>
-              <option value="red">Czerwony</option>
-              <option value="green" selected>Zielony</option>
-              <option value="aqua">Aqua</option>
-              <option value="blue">Niebieski</option>
-              <option value="light_purple">Fioletowy</option>
-              <option value="dark_green">Ciemny zielony</option>
-              <option value="dark_red">Ciemny czerwony</option>
-              <option value="dark_aqua">Ciemny aqua</option>
-              <option value="dark_blue">Ciemny niebieski</option>
-              <option value="gray">Szary</option>
-              <option value="dark_gray">Ciemny szary</option>
-            </select>
-
-            <!-- Target -->
-            <label class="field-label" for="tellraw-target">Cel (@a, @p, @r, gracz)</label>
-            <input type="text" id="tellraw-target" class="field-input" value="@a" />
-
-            <div class="checkbox-row">
+          <div class="tool-body form-grid">
+            <div class="input-group">
+              <label class="field-label">Cel (@a, @p)</label>
+              <input type="text" id="tellraw-target" class="field-input" value="@a" />
+            </div>
+            <div class="input-group full-width">
+              <label class="field-label">Treść wiadomości</label>
+              <input type="text" id="tellraw-text" class="field-input" value="Kliknij tutaj by otworzyć stronę!" />
+            </div>
+            <div class="input-group">
+              <label class="field-label">Kolor tekstu</label>
+              <select id="tellraw-color" class="field-select">
+                <option value="white">Biały</option><option value="yellow">Żółty</option>
+                <option value="gold">Złoty</option><option value="red">Czerwony</option>
+                <option value="green" selected>Zielony</option><option value="aqua">Aqua</option>
+                <option value="light_purple">Fioletowy</option>
+              </select>
+            </div>
+            <div class="input-group checkbox-row">
               <label><input type="checkbox" id="tellraw-bold" /> Pogrubienie</label>
               <label><input type="checkbox" id="tellraw-italic" /> Kursywa</label>
-              <label><input type="checkbox" id="tellraw-underline" /> Podkreślenie</label>
             </div>
-
-            <!-- Live preview -->
-            <div class="tellraw-preview-label field-label">Podgląd:</div>
-            <div class="tellraw-preview" id="tellraw-preview">Witaj na serwerze!</div>
-
-            <button class="btn btn-primary w-full" id="tellraw-generate-btn">⚡ Generuj /tellraw</button>
-
-            <div class="output-wrap" id="tellraw-output-wrap" hidden>
-              <label class="field-label">Gotowa komenda:</label>
-              <div class="output-box">
-                <code id="tellraw-output"></code>
-                <button class="copy-btn" data-target="tellraw-output" aria-label="Kopiuj">📋 Kopiuj</button>
-              </div>
+            <div class="input-group full-width">
+              <label class="field-label">Zdarzenie kliknięcia (URL)</label>
+              <input type="url" id="tellraw-url" class="field-input" placeholder="https://..." />
+            </div>
+            <div class="input-group full-width">
+              <label class="field-label">Zdarzenie najechania (Hover tekst)</label>
+              <input type="text" id="tellraw-hover" class="field-input" placeholder="Wyswietlany tekst" />
+            </div>
+            <button class="btn btn-primary full-width" id="tellraw-generate-btn">⚡ Generuj /tellraw</button>
+            <div class="output-wrap full-width" hidden>
+              <div class="output-box"><code></code><button class="copy-btn">📋 Kopiuj</button></div>
             </div>
           </div>
         </div>
 
-        <!-- ===== C) ITEM NAME GENERATOR ===== -->
-        <div class="tool-card animate-entry" id="itemname-gen" data-tool-name="Generator nazw przedmiotów" data-tool-id="itemname-gen">
+        <div class="tool-card animate-entry" id="tp-gen" data-category="players">
           <div class="tool-card-header">
-            <span class="tool-icon">✏️</span>
-            <div>
-              <h3>Generator nazw przedmiotów</h3>
-              <p class="tool-tagline">Nazwij swój przedmiot z kolorem i stylem</p>
-            </div>
-            <button class="btn-fullscreen" aria-label="Pełny ekran" title="Pełny ekran">⛶</button>
+            <span class="tool-icon">🧭</span>
+            <div><h3>Generator /tp</h3><p class="tool-tagline">Teleportacja graczy i bytów</p></div>
           </div>
-
-          <div class="tool-body">
-            <label class="field-label" for="iname-text">Nazwa przedmiotu</label>
-            <input type="text" id="iname-text" class="field-input" placeholder="np. Miecz Przeznaczenia" value="Miecz Przeznaczenia" />
-
-            <label class="field-label" for="iname-color">Kolor</label>
-            <select id="iname-color" class="field-select">
-              <option value="gold">Złoty ✦</option>
-              <option value="red">Czerwony</option>
-              <option value="aqua">Aqua</option>
-              <option value="green">Zielony</option>
-              <option value="light_purple">Fioletowy</option>
-              <option value="yellow">Żółty</option>
-              <option value="white">Biały</option>
-              <option value="dark_purple">Ciemny fiolet</option>
-            </select>
-
-            <div class="checkbox-row">
-              <label><input type="checkbox" id="iname-bold" checked /> Pogrubienie</label>
-              <label><input type="checkbox" id="iname-italic" /> Kursywa</label>
-              <label><input type="checkbox" id="iname-underline" /> Podkreślenie</label>
+          <div class="tool-body form-grid">
+            <div class="input-group">
+              <label class="field-label">Kto (Cel)</label>
+              <input type="text" id="tp-target" class="field-input" value="@p" />
             </div>
-
-            <!-- Live preview -->
-            <div class="field-label">Podgląd nazwy:</div>
-            <div class="iname-preview" id="iname-preview">Miecz Przeznaczenia</div>
-
-            <button class="btn btn-primary w-full" id="iname-generate-btn">⚡ Generuj JSON</button>
-
-            <div class="output-wrap" id="iname-output-wrap" hidden>
-              <label class="field-label">JSON do Minecraft (CustomName):</label>
-              <div class="output-box">
-                <code id="iname-output"></code>
-                <button class="copy-btn" data-target="iname-output" aria-label="Kopiuj">📋 Kopiuj</button>
-              </div>
+            <div class="input-group">
+              <label class="field-label">Gdzie (Kordy lub gracz)</label>
+              <input type="text" id="tp-dest" class="field-input" value="0 100 0" placeholder="X Y Z lub @a" />
+            </div>
+            <div class="input-group checkbox-row full-width">
+              <label><input type="checkbox" id="tp-relative" checked/> Współrzędne relatywne (~)</label>
+            </div>
+            <button class="btn btn-primary full-width" id="tp-generate-btn">⚡ Generuj /tp</button>
+            <div class="output-wrap full-width" hidden>
+              <div class="output-box"><code></code><button class="copy-btn">📋 Kopiuj</button></div>
             </div>
           </div>
         </div>
 
-        <!-- ===== D) NICK GENERATOR ===== -->
-        <div class="tool-card animate-entry" id="nick-gen" data-tool-name="Generator nicków" data-tool-id="nick-gen">
+        <div class="tool-card animate-entry" id="enchant-gen" data-category="items">
           <div class="tool-card-header">
-            <span class="tool-icon">🎮</span>
-            <div>
-              <h3>Generator nicków Minecraft</h3>
-              <p class="tool-tagline">Znajdź swój idealny nick do gry</p>
-            </div>
-            <button class="btn-fullscreen" aria-label="Pełny ekran" title="Pełny ekran">⛶</button>
+            <span class="tool-icon">✨</span>
+            <div><h3>Generator /enchant</h3><p class="tool-tagline">Nakładaj enchanty na trzymany przedmiot</p></div>
           </div>
-
-          <div class="tool-body">
-            <label class="field-label" for="nick-style">Styl nicka</label>
-            <select id="nick-style" class="field-select">
-              <option value="pvp">PvP 🗡️</option>
-              <option value="survival">Survival 🌲</option>
-              <option value="hardcore">Hardcore ☠️</option>
-              <option value="premium">Premium ✨</option>
-            </select>
-
-            <button class="btn btn-primary w-full" id="nick-generate-btn">🎲 Generuj nick</button>
-
-            <div class="nick-results" id="nick-results" hidden>
-              <label class="field-label">Wygenerowane nicki:</label>
-              <div class="nick-list" id="nick-list"></div>
+          <div class="tool-body form-grid">
+            <div class="input-group">
+              <label class="field-label">Gracz</label>
+              <input type="text" id="enchant-target" class="field-input" value="@p" />
             </div>
-          </div>
-        </div>
-
-        <!-- ===== E) STACK CALCULATOR ===== -->
-        <div class="tool-card animate-entry" id="stack-calc" data-tool-name="Kalkulator stacków" data-tool-id="stack-calc">
-          <div class="tool-card-header">
-            <span class="tool-icon">📦</span>
-            <div>
-              <h3>Kalkulator stacków</h3>
-              <p class="tool-tagline">Przelicz przedmioty na stacki i resztę</p>
+            <div class="input-group">
+              <label class="field-label">Zaklęcie</label>
+              <select id="enchant-type" class="field-select">
+                <option value="sharpness">Sharpness</option>
+                <option value="efficiency">Efficiency</option>
+                <option value="protection">Protection</option>
+                <option value="fortune">Fortune</option>
+                <option value="unbreaking">Unbreaking</option>
+                <option value="mending">Mending</option>
+                <option value="power">Power</option>
+                <option value="infinity">Infinity</option>
+              </select>
             </div>
-            <button class="btn-fullscreen" aria-label="Pełny ekran" title="Pełny ekran">⛶</button>
-          </div>
-
-          <div class="tool-body">
-            <label class="field-label" for="stack-amount">Ilość przedmiotów</label>
-            <input type="number" id="stack-amount" class="field-input" value="100" min="0" placeholder="np. 576" />
-
-            <label class="field-label" for="stack-size">Rozmiar stacka</label>
-            <select id="stack-size" class="field-select">
-              <option value="64" selected>64 (standardowy)</option>
-              <option value="16">16 (np. strzały w starszych ver.)</option>
-              <option value="1">1 (np. narzędzia)</option>
-            </select>
-
-            <button class="btn btn-primary w-full" id="stack-calc-btn">📊 Oblicz</button>
-
-            <div class="stack-result" id="stack-result" hidden>
-              <div class="stat-card"><span class="stat-value" id="stack-stacks">0</span><span class="stat-label">stacków</span></div>
-              <div class="stat-card"><span class="stat-value" id="stack-leftover">0</span><span class="stat-label">reszta</span></div>
-              <div class="stat-card"><span class="stat-value" id="stack-chests">0</span><span class="stat-label">skrzynek</span></div>
+            <div class="input-group">
+              <label class="field-label">Poziom</label>
+              <input type="number" id="enchant-lvl" class="field-input" value="1" min="1" max="5" />
+            </div>
+            <button class="btn btn-primary full-width" id="enchant-generate-btn">⚡ Generuj /enchant</button>
+            <div class="output-wrap full-width" hidden>
+              <div class="output-box"><code></code><button class="copy-btn">📋 Kopiuj</button></div>
             </div>
           </div>
         </div>
 
-        <!-- ===== F) SERVER IDEA GENERATOR ===== -->
-        <div class="tool-card animate-entry" id="server-gen" data-tool-name="Generator pomysłów na serwer" data-tool-id="server-gen">
-          <div class="tool-card-header">
-            <span class="tool-icon">🌐</span>
-            <div>
-              <h3>Generator pomysłów na serwer</h3>
-              <p class="tool-tagline">Inspiracja dla Twojego wymarzonego serwera</p>
-            </div>
-            <button class="btn-fullscreen" aria-label="Pełny ekran" title="Pełny ekran">⛶</button>
-          </div>
-
-          <div class="tool-body">
-            <label class="field-label" for="server-theme">Motyw serwera (opcjonalnie)</label>
-            <select id="server-theme" class="field-select">
-              <option value="random">Losowy 🎲</option>
-              <option value="survival">Survival 🌲</option>
-              <option value="pvp">PvP 🗡️</option>
-              <option value="creative">Creative 🎨</option>
-              <option value="rpg">RPG ⚔️</option>
-              <option value="skyblock">Skyblock 🏝️</option>
-              <option value="minigames">Minigry 🎮</option>
-            </select>
-
-            <button class="btn btn-primary w-full" id="server-generate-btn">💡 Generuj pomysł</button>
-
-            <div class="server-result" id="server-result" hidden>
-              <div class="server-field"><span class="server-field-label">🏷️ Nazwa serwera</span><span id="srv-name" class="server-field-value"></span></div>
-              <div class="server-field"><span class="server-field-label">🎮 Typ rozgrywki</span><span id="srv-type" class="server-field-value"></span></div>
-              <div class="server-field"><span class="server-field-label">⚙️ Mechanika</span><span id="srv-mechanic" class="server-field-value"></span></div>
-              <div class="server-field"><span class="server-field-label">📝 Opis</span><span id="srv-desc" class="server-field-value"></span></div>
-              <button class="copy-btn mt-sm" data-target-fn="server-copy" aria-label="Kopiuj pomysł">📋 Kopiuj pomysł</button>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /tools-grid -->
-    </div>
+      </div></div>
   </section>
 
-  <!-- ===== GUIDES SECTION ===== -->
-  <section id="guides" class="guides-section section-pad">
-    <div class="container">
-      <h2 class="section-title">📚 Poradniki</h2>
-      <p class="section-sub">Skrótowe przewodniki dla graczy i adminów serwerów.</p>
-      <div class="guides-grid">
-
-        <article class="guide-card animate-entry">
-          <span class="guide-icon">🖥️</span>
-          <h3>Jak zrobić serwer Minecraft?</h3>
-          <p>Krok po kroku od pobrania Paper/Spigot do konfiguracji pliku server.properties i pierwszego uruchomienia.</p>
-          <button class="btn btn-outline btn-sm guide-expand-btn">Czytaj więcej</button>
-          <div class="guide-content" hidden>
-            <ol>
-              <li>Pobierz Paper lub Spigot z oficjalnej strony.</li>
-              <li>Utwórz folder dla serwera i wrzuć plik .jar.</li>
-              <li>Uruchom serwer raz – wygeneruje pliki konfiguracyjne.</li>
-              <li>Zaakceptuj EULA (eula.txt → eula=true).</li>
-              <li>Edytuj server.properties (port, max-players, motd).</li>
-              <li>Uruchom serwer ponownie i połącz się przez localhost.</li>
-            </ol>
-          </div>
-        </article>
-
-        <article class="guide-card animate-entry">
-          <span class="guide-icon">🔗</span>
-          <h3>Jak używać Playit.gg?</h3>
-          <p>Bezpłatny tunel do udostępnienia serwera znajomym bez otwierania portów w routerze.</p>
-          <button class="btn btn-outline btn-sm guide-expand-btn">Czytaj więcej</button>
-          <div class="guide-content" hidden>
-            <ol>
-              <li>Zarejestruj się na playit.gg.</li>
-              <li>Pobierz agenta Playit na swój komputer.</li>
-              <li>Uruchom agenta i zaloguj się – dostaniesz unikalny link.</li>
-              <li>W panelu stwórz tunel TCP na port 25565.</li>
-              <li>Podaj znajomym adres tunelu zamiast IP.</li>
-            </ol>
-          </div>
-        </article>
-
-        <article class="guide-card animate-entry">
-          <span class="guide-icon">🦅</span>
-          <h3>Jak używać Pterodactyl?</h3>
-          <p>Panel hostingowy open-source do zarządzania serwerami gier, w tym Minecraft.</p>
-          <button class="btn btn-outline btn-sm guide-expand-btn">Czytaj więcej</button>
-          <div class="guide-content" hidden>
-            <ol>
-              <li>Zainstaluj panel i Wings na VPS z Ubuntu 20.04+.</li>
-              <li>Skonfiguruj bazę danych MySQL i Redis.</li>
-              <li>Utwórz node i dodaj serwer Minecraft w panelu.</li>
-              <li>Przydziel zasoby (RAM, CPU, dysk).</li>
-              <li>Uruchom serwer z zakładki Console.</li>
-            </ol>
-          </div>
-        </article>
-
-        <article class="guide-card animate-entry">
-          <span class="guide-icon">⚔️</span>
-          <h3>Najlepsze enchanty Minecraft</h3>
-          <p>Ranking enchantów dla każdego slotu ekwipunku – od miecza po buty.</p>
-          <button class="btn btn-outline btn-sm guide-expand-btn">Czytaj więcej</button>
-          <div class="guide-content" hidden>
-            <ul>
-              <li><strong>Miecz:</strong> Sharpness V, Looting III, Fire Aspect II, Mending, Unbreaking III</li>
-              <li><strong>Kilof:</strong> Efficiency V, Fortune III, Mending, Unbreaking III</li>
-              <li><strong>Zbroja:</strong> Protection IV, Mending, Unbreaking III, Thorns III</li>
-              <li><strong>Buty:</strong> Feather Falling IV, Depth Strider III, Mending</li>
-              <li><strong>Łuk:</strong> Power V, Infinity, Flame, Punch II</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="guide-card animate-entry">
-          <span class="guide-icon">📦</span>
-          <h3>Jak zrobić własny datapack?</h3>
-          <p>Tworzenie datapacks pozwala modyfikować mechaniki gry bez modów – tylko z plikami JSON i funkcjami.</p>
-          <button class="btn btn-outline btn-sm guide-expand-btn">Czytaj więcej</button>
-          <div class="guide-content" hidden>
-            <ol>
-              <li>Utwórz folder w katalogu <code>world/datapacks/</code>.</li>
-              <li>Dodaj plik <code>pack.mcmeta</code> z wersją pack_format.</li>
-              <li>Struktura: <code>data/[namespace]/functions/</code> dla funkcji .mcfunction.</li>
-              <li>Użyj <code>/function [namespace]:[plik]</code> do wywołania funkcji.</li>
-              <li>Testuj za pomocą <code>/reload</code> po każdej zmianie.</li>
-            </ol>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== ABOUT SECTION ===== -->
-  <section id="about" class="about-section section-pad">
-    <div class="container">
-      <div class="about-card animate-entry">
-        <span class="about-icon">⛏</span>
-        <h2>O projekcie</h2>
-        <p>
-          <strong>Minecraft Tools Hub</strong> to darmowy zestaw narzędzi dla graczy Minecraft.
-          Projekt został stworzony przez <strong>r4dzioo_</strong> z myślą o szybszym tworzeniu
-          komend, przedmiotów i pomysłów. Wszystkie narzędzia działają bezpośrednio w przeglądarce
-          – bez rejestracji, bez reklam, bez limitów.
-        </p>
-        <div class="about-stats">
-          <div class="astat"><span class="astat-num">6</span><span class="astat-label">narzędzi</span></div>
-          <div class="astat"><span class="astat-num">5</span><span class="astat-label">poradników</span></div>
-          <div class="astat"><span class="astat-num">100%</span><span class="astat-label">za darmo</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <p class="footer-logo">⛏ Minecraft Tools Hub</p>
-      <p class="footer-copy">© 2026 Minecraft Tools Hub | Created by <strong>r4dzioo_</strong></p>
+      <p class="footer-copy">© 2026 Minecraft Tools Hub | Wersja Command-Only | Created by <strong>r4dzioo_</strong></p>
       <p class="footer-note">Nie jest powiązany z Mojang Studios ani Microsoft.</p>
     </div>
   </footer>
-
-  <!-- ===== FULLSCREEN OVERLAY ===== -->
-  <div id="fullscreen-overlay" class="fullscreen-overlay" hidden role="dialog" aria-modal="true" aria-label="Narzędzie w trybie pełnoekranowym">
-    <div class="fullscreen-inner">
-      <button class="fullscreen-close" id="fullscreen-close" aria-label="Zamknij pełny ekran">✕ Zamknij</button>
-      <div id="fullscreen-content"></div>
-    </div>
-  </div>
 
   <script src="script.js"></script>
 </body>
