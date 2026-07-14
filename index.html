@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minecraft Tools Hub | r4dzioo_</title>
+  <meta name="description" content="Generator komend Minecraft – /give, /summon, /effect, /gamerule, /title, /tellraw, /tp. Interfejs w stylu Minecraft Inventory." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛏</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- CURSOR GLOW -->
+  <div id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- EXP BAR -->
+  <div id="exp-bar-wrap" aria-hidden="true">
+    <div id="exp-bar-fill"></div>
+    <span id="exp-bar-label">30</span>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header id="site-header">
+    <div class="header-inner">
+      <a href="#" class="logo" aria-label="Minecraft Tools Hub – strona główna">
+        <span class="logo-icon">⛏</span>
+        <span class="logo-text">Minecraft <strong>Tools Hub</strong></span>
+        <span class="logo-author">by r4dzioo_</span>
+      </a>
+
+      <!-- Version selector -->
+      <div class="header-version">
+        <label for="global-version">🌐 Wersja:</label>
+        <select id="global-version" class="mc-select">
+          <option value="1.8.9">1.8.9</option>
+          <option value="1.12.2">1.12.2</option>
+          <option value="1.16.5">1.16.5</option>
+          <option value="1.18.2">1.18.2</option>
+          <option value="1.19.4">1.19.4</option>
+          <option value="1.20">1.20</option>
+          <option value="1.20.1">1.20.1</option>
+          <option value="1.20.2">1.20.2</option>
+          <option value="1.20.4">1.20.4</option>
+          <option value="1.20.5">1.20.5</option>
+          <option value="1.20.6">1.20.6</option>
+          <option value="1.21">1.21</option>
+          <option value="1.21.1">1.21.1</option>
+          <option value="1.21.3">1.21.3</option>
+          <option value="1.21.4" selected>1.21.4</option>
+          <option value="1.21.5">1.21.5</option>
+          <option value="1.21.6">1.21.6</option>
+          <option value="1.21.7">1.21.7</option>
+          <option value="1.21.8">1.21.8</option>
+        </select>
+      </div>
+
+      <!-- Search -->
+      <div class="header-search">
+        <span class="search-icon-mc">🔍</span>
+        <input type="search" id="tool-search" placeholder="Szukaj generatora…" autocomplete="off" aria-label="Wyszukaj generator" />
+        <div id="search-results" class="mc-dropdown" role="listbox"></div>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== MAIN INVENTORY SCREEN ===== -->
+  <main id="main-inventory" class="inventory-screen">
+
+    <!-- INVENTORY TITLE BAR -->
+    <div class="inv-title-bar">
+      <span class="inv-title-text">⬛ Inventory – Wybierz generator</span>
+      <div id="recent-pills" class="recent-pills"></div>
+    </div>
+
+    <!-- INVENTORY GRID (slots) -->
+    <div class="inv-grid" id="inv-grid">
+
+      <!-- SLOT 1: /give -->
+      <button class="inv-slot" data-gen="give" data-tooltip="Generator /give&#10;Daj przedmiot z enchantami,&#10;nazwą i lorem" aria-label="Generator /give">
+        <div class="slot-enchant-glint"></div>
+        <span class="slot-icon">🗡️</span>
+        <span class="slot-label">/give</span>
+        <span class="slot-count">64</span>
+      </button>
+
+      <!-- SLOT 2: /summon -->
+      <button class="inv-slot" data-gen="summon" data-tooltip="Generator /summon&#10;Przyzwij moba z atrybutami,&#10;wyposażeniem i efektami" aria-label="Generator /summon">
+        <span class="slot-icon">🧟</span>
+        <span class="slot-label">/summon</span>
+        <span class="slot-count">1</span>
+      </button>
+
+      <!-- SLOT 3: Enchanty -->
+      <button class="inv-slot enchanted" data-gen="enchant" data-tooltip="Generator enchantów&#10;Zaczaruj przedmiot&#10;i generuj /enchant" aria-label="Generator enchantów">
+        <div class="slot-enchant-glint"></div>
+        <span class="slot-icon">✨</span>
+        <span class="slot-label">Enchanty</span>
+        <span class="slot-count">30</span>
+      </button>
+
+      <!-- SLOT 4: /effect -->
+      <button class="inv-slot" data-gen="effect" data-tooltip="Generator /effect&#10;Dodaj efekt potionowy&#10;z czasem i poziomem" aria-label="Generator /effect">
+        <span class="slot-icon">🧪</span>
+        <span class="slot-label">/effect</span>
+        <span class="slot-count">8</span>
+      </button>
+
+      <!-- SLOT 5: /gamerule -->
+      <button class="inv-slot" data-gen="gamerule" data-tooltip="Generator /gamerule&#10;Ustaw zasady gry&#10;na serwerze" aria-label="Generator /gamerule">
+        <span class="slot-icon">⚙️</span>
+        <span class="slot-label">/gamerule</span>
+        <span class="slot-count">1</span>
+      </button>
+
+      <!-- SLOT 6: /title -->
+      <button class="inv-slot" data-gen="title" data-tooltip="Generator /title&#10;Wyświetl komunikat&#10;na ekranie gracza" aria-label="Generator /title">
+        <span class="slot-icon">📺</span>
+        <span class="slot-label">/title</span>
+        <span class="slot-count">1</span>
+      </button>
+
+      <!-- SLOT 7: /tellraw -->
+      <button class="inv-slot enchanted" data-gen="tellraw" data-tooltip="Generator /tellraw&#10;Stylizowane wiadomości&#10;w czacie Minecraft" aria-label="Generator /tellraw">
+        <div class="slot-enchant-glint"></div>
+        <span class="slot-icon">💬</span>
+        <span class="slot-label">/tellraw</span>
+        <span class="slot-count">1</span>
+      </button>
+
+      <!-- SLOT 8: /tp -->
+      <button class="inv-slot" data-gen="tp" data-tooltip="Generator /tp&#10;Teleportuj gracza&#10;do podanych koordynatów" aria-label="Generator /tp">
+        <span class="slot-icon">🟣</span>
+        <span class="slot-label">/tp</span>
+        <span class="slot-count">1</span>
+      </button>
+
+    </div>
+
+    <!-- ARMOR/EQUIPMENT SLOTS (dekoracja) -->
+    <div class="inv-equipment">
+      <div class="inv-equipment-label">Equipment</div>
+      <div class="inv-equipment-slots">
+        <div class="eq-slot" title="Helmet">🪖</div>
+        <div class="eq-slot" title="Chestplate">🦺</div>
+        <div class="eq-slot" title="Leggings">👖</div>
+        <div class="eq-slot" title="Boots">👟</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== GENERATOR PANEL (modal) ===== -->
+  <div id="gen-panel" class="gen-panel" hidden role="dialog" aria-modal="true" aria-labelledby="gen-panel-title">
+    <div class="gen-panel-inner">
+
+      <!-- Panel header -->
+      <div class="gen-panel-header">
+        <span class="gen-panel-icon" id="gen-panel-icon">⚙️</span>
+        <h2 class="gen-panel-title" id="gen-panel-title">Generator</h2>
+        <button class="gen-panel-close mc-btn" id="gen-panel-close" aria-label="Zamknij">✕ ESC</button>
+      </div>
+
+      <!-- Panel body – wypełniane przez JS -->
+      <div class="gen-panel-body" id="gen-panel-body"></div>
+
+    </div>
+  </div>
+
+  <!-- ===== TOAST NOTIFICATION ===== -->
+  <div id="toast" class="mc-toast" aria-live="polite"></div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-logo">⛏ Minecraft Tools Hub</p>
+      <p class="footer-copy">© 2026 Minecraft Tools Hub | Created by <strong>r4dzioo_</strong></p>
+      <p class="footer-note">Nie jest powiązany z Mojang Studios ani Microsoft.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
